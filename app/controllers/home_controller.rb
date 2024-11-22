@@ -1,7 +1,7 @@
 class HomeController < ApplicationController
   before_action :require_login, only: [:index]
   def index
-    @users = User.all
+    @projects = Project.all
   end
 
   private
