@@ -4,11 +4,14 @@
 <% end %>
 
 <%= link_to new_project_path do %>
-    <span>新增看板</span>
+<div>
+    <p>新增看板</p>
+</div>
 <% end %>
 <% current_user.projects.each do |project| %>
     <%= link_to project_path(project) do %>
-        <h5><%= project.name %></h5>
-        <p><%= project.description %></p>
+        <div>
+            <p><%= project.name %></p>
+        </div>
     <% end %>
 <% end %>

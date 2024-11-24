@@ -1,18 +1,66 @@
+<%= button_to "所有看板", root_path, method: :get %>
 <h1><%= @project.name %></h1>
-<% @lanes.each do |lane| %>
-    <h2><%= lane.name %></h2>
-    <ul>
-        <% lane.tasks.each do |task| %>
+<div>
+    <div>
+        <h2>待處理</h2>
+        <ul>
+        <% if @project.lanes.first&.tasks %>
+            <% @project.lanes.first.tasks.each do |task| %>
             <li>
-                <%= task.name %>
+                <%= link_to task.name, edit_project_task_path(@project, task) %>
+                <%= task.priority %>
+                <%= task.description %>
+                <%= task.end_date %>
                 <%= button_to "刪除", project_task_path(@project, task), method: :delete %>
             </li>
+            <% end %>
         <% end %>
-    </ul>
-    <%= form_with(url: project_tasks_path(@project), method: :post) do |form| %>
-        <%= form.hidden_field "task[lane_id]", value: lane.id %>
+        </ul>
+        <%= form_with(url: project_tasks_path(@project), method: :post) do |form| %>
+        <%= form.hidden_field "task[lane_id]", value: @project.lanes.first&.id %>
+        <%= form.hidden_field "task[status]", value: "todo" %>
         <%= form.text_field "task[name]", placeholder: "新增任務" %>
         <%= form.submit "新增" %>
-    <% end %>
-<% end %>
-<%= button_to "刪除專案", project_path(@project), method: :delete %>
+        <% end %>
+    </div>
+
+    <div>
+        <h2>進行中</h2>
+        <ul>
+        <% if @project.lanes.second&.tasks %>
+            <% @project.lanes.second.tasks.each do |task| %>
+            <li>
+                <%= link_to task.name, edit_project_task_path(@project, task) %>
+                <%= button_to "刪除", project_task_path(@project, task), method: :delete %>
+            </li>
+            <% end %>
+        <% end %>
+        </ul>
+        <%= form_with(url: project_tasks_path(@project), method: :post) do |form| %>
+        <%= form.hidden_field "task[lane_id]", value: @project.lanes.second&.id %>
+        <%= form.hidden_field "task[status]", value: "doing" %>
+        <%= form.text_field "task[name]", placeholder: "新增任務" %>
+        <%= form.submit "新增" %>
+        <% end %>
+    </div>
+    <div>
+        <h2>已完成</h2>
+        <ul>
+        <% if @project.lanes.third&.tasks %>
+            <% @project.lanes.third.tasks.each do |task| %>
+            <li>
+                <%= link_to task.name, edit_project_task_path(@project, task) %>
+                <%= button_to "刪除", project_task_path(@project, task), method: :delete %>
+            </li>
+            <% end %>
+        <% end %>
+        </ul>
+        <%= form_with(url: project_tasks_path(@project), method: :post) do |form| %>
+        <%= form.hidden_field "task[lane_id]", value: @project.lanes.third&.id %>
+        <%= form.hidden_field "task[status]", value: "done" %>
+        <%= form.text_field "task[name]", placeholder: "新增任務" %>
+        <%= form.submit "新增" %>
+        <% end %>
+    </div>
+    <%= button_to "刪除專案", project_path(@project), method: :delete %>
+</div>

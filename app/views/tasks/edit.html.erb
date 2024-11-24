@@ -1,0 +1,21 @@
+<h1>編輯任務</h1>
+<%= form_with(model: [@project, @task]) do |form| %>
+    <div>
+        <%= form.label :name, "任務名稱" %>
+        <%= form.text_field :name %>
+    </div>
+    <div>
+        <%= form.label :description, "描述" %>
+        <%= form.text_area :description, row: 3 %>
+    </div>
+    <div>
+        <%= form.label :priority, "處理優先級別" %>
+        <%= form.select :priority, [["低", 2], ["中", 1], ["高", 0]] %>
+    </div>
+    <div>
+        <%= form.label :end_date, "截止日期" %>
+        <%= form.datetime_local_field :end_date %>
+    </div>
+    <%= form.submit "更新" %>
+    <%= link_to "回上一頁", project_path(@project) %>
+<% end %>
