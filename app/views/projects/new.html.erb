@@ -1,0 +1,6 @@
+<h1>新增專案</h1>
+<%= form_with(model: @project, url: projects_path, method: :post) do |form| %>
+    <%= form.label :name, "專案名稱" %>
+    <%= form.text_field :name, placeholder: "請輸入專案名稱" %>
+    <%= form.submit "新增專案" %>
+<% end %>

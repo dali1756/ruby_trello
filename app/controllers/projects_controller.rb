@@ -8,16 +8,22 @@ class ProjectsController < ApplicationController
   end
 
   def create
-    @project = Project.new(project_params)
+    @project = current_user.projects.create(project_params)
     if @project.save
-      redirect_to "/projects"
+      redirect_to root_path
     end
+  end
+
+  def show
+    @project = Project.find(params[:id])
+    @lanes = @project.lanes.includes(:tasks)
   end
 
   def destroy
     @project = Project.find_by(id: params[:id])
-    @project.destroy
-    redirect_to "/"
+    if @project.destroy
+      redirect_to root_path
+    end
   end
 
   private

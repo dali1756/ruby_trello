@@ -13,5 +13,7 @@ Rails.application.routes.draw do
   get '/users', to: 'users#sign_up'
   root "home#index"
 
-  resources :projects
+  resources :projects do
+    resources :tasks, only: [:create, :destroy]
+  end
 end
