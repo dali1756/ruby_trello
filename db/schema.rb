@@ -1,5 +1,4 @@
-ActiveRecord::Schema[7.1].define(version: 2024_11_23_170934) do
-  # These are extensions that must be enabled in order to support this database
+ActiveRecord::Schema[7.1].define(version: 2024_11_24_094858) do
   enable_extension "plpgsql"
 
   create_table "lanes", force: :cascade do |t|
@@ -29,6 +28,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_23_170934) do
     t.datetime "end_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "description"
     t.index ["lane_id"], name: "index_tasks_on_lane_id"
     t.index ["user_id"], name: "index_tasks_on_user_id"
   end

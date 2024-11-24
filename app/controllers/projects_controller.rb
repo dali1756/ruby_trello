@@ -17,6 +17,12 @@ class ProjectsController < ApplicationController
   def show
     @project = Project.find(params[:id])
     @lanes = @project.lanes.includes(:tasks)
+    if @lanes.empty?
+      %w[待處理 進行中 已完成].each do |name|
+        @project.lanes.create(name: name)
+      end
+      @lanes = @project.lanes.order(:id).includes(:tasks)
+    end
   end
 
   def destroy
